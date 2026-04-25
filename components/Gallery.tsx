@@ -5,7 +5,7 @@ import { useRef } from "react";
 
 const shots = [
   {
-    src: "https://images.unsplash.com/photo-1504511751892-94f1c20bb52a?auto=format&fit=crop&w=1400&q=80",
+    src: "https://images.unsplash.com/photo-1502920917128-1aa500764cbd?auto=format&fit=crop&w=1400&q=80",
     title: "Pacific Coast Hwy",
     span: "row-span-2",
   },
@@ -20,12 +20,12 @@ const shots = [
     span: "",
   },
   {
-    src: "https://images.unsplash.com/photo-1502780402662-acc01917cf3e?auto=format&fit=crop&w=1400&q=80",
+    src: "https://images.unsplash.com/photo-1602002418082-a4443e081dd1?auto=format&fit=crop&w=1400&q=80",
     title: "Boardwalk",
     span: "row-span-2",
   },
   {
-    src: "https://images.unsplash.com/photo-1539593608270-2b04dc0e0bf5?auto=format&fit=crop&w=1400&q=80",
+    src: "https://images.unsplash.com/photo-1602002418816-5c0aeef426aa?auto=format&fit=crop&w=1400&q=80",
     title: "Diner Glow",
     span: "",
   },
@@ -35,7 +35,7 @@ const shots = [
     span: "",
   },
   {
-    src: "https://images.unsplash.com/photo-1552071773-8da41bb01307?auto=format&fit=crop&w=1400&q=80",
+    src: "https://images.unsplash.com/photo-1518391846015-55a9cc003b25?auto=format&fit=crop&w=1400&q=80",
     title: "Hwy 1",
     span: "col-span-2",
   },

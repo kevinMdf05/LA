@@ -30,7 +30,7 @@ export const laPlaces: Place[] = [
     description:
       "Manicured palms in geometric formation. Pastel mansions hidden behind hedges of bougainvillea. The hum of a Bentley idling at a red light. This is California cinema, distilled.",
     image:
-      "https://images.unsplash.com/photo-1597063118979-5e1c2bdce6dd?auto=format&fit=crop&w=1600&q=80",
+      "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=1600&q=80",
     coords: { x: 32, y: 52 },
     vibe: "Pastel opulence",
   },
@@ -54,7 +54,7 @@ export const laPlaces: Place[] = [
     description:
       "Art Deco copper domes glowing at dusk. From the terrace, the LA grid ignites in slow motion — orange, then violet, then a galaxy of yellow lights. Above, Saturn waits in the telescope.",
     image:
-      "https://images.unsplash.com/photo-1568229611087-1d40a85a6cb3?auto=format&fit=crop&w=1600&q=80",
+      "https://images.unsplash.com/photo-1518756131217-31eb79b20e8f?auto=format&fit=crop&w=1600&q=80",
     coords: { x: 50, y: 35 },
     vibe: "Stargazer's perch",
   },
@@ -90,7 +90,7 @@ export const laPlaces: Place[] = [
     description:
       "Terrazzo sidewalks. Window mannequins in haute couture. Ferraris double-parked outside Cartier. A choreographed daydream where every reflection is also a runway.",
     image:
-      "https://images.unsplash.com/photo-1597254620000-a45d04e92caf?auto=format&fit=crop&w=1600&q=80",
+      "https://images.unsplash.com/photo-1564507004663-b6dfb3c824d5?auto=format&fit=crop&w=1600&q=80",
     coords: { x: 31, y: 53 },
     vibe: "Couture catwalk",
   },
@@ -129,7 +129,7 @@ export const aroundLa: Place[] = [
     description:
       "Two hours east, granite boulders glow rose at sunset and the Yuccas raise spiky arms to the stars. Sleep in a cabin, wake to silence, the Milky Way still bright at 5am.",
     image:
-      "https://images.unsplash.com/photo-1568454537842-d933259bb1ce?auto=format&fit=crop&w=1600&q=80",
+      "https://images.unsplash.com/photo-1481277542470-605612bd2d61?auto=format&fit=crop&w=1600&q=80",
     coords: { x: 78, y: 55 },
     vibe: "Cosmic desert",
   },
@@ -165,7 +165,7 @@ export const aroundLa: Place[] = [
     description:
       "Highway 1 unspools above the Pacific. Bixby Bridge, redwood canyons, sea otters in kelp forests. A six-hour drive north of LA — and a hundred years away from everything.",
     image:
-      "https://images.unsplash.com/photo-1545569310-806e0e7c7d4d?auto=format&fit=crop&w=1600&q=80",
+      "https://images.unsplash.com/photo-1556767576-5ec41e3239ea?auto=format&fit=crop&w=1600&q=80",
     coords: { x: 8, y: 18 },
     vibe: "Coastal cathedral",
   },
