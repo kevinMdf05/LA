@@ -1,43 +1,64 @@
-# dependencies
-/node_modules
-/.pnp
-.pnp.*
-.yarn/*
-!.yarn/patches
-!.yarn/plugins
-!.yarn/releases
-!.yarn/versions
+# ---------------------------------------------------------------------------
+# KAI — .gitignore
+# Règle directrice (KAI-MISSION-001 §11) : aucun document personnel, aucune
+# base, aucun modèle et aucun secret ne doit entrer dans Git.
+# ---------------------------------------------------------------------------
 
-# testing
-/coverage
-
-# next.js
-/.next/
-/out/
-
-# production
-/build
-
-# misc
-.DS_Store
-*.pem
-
-# debug
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-.pnpm-debug.log*
-
-# env files
-.env*.local
+# --- Secrets : jamais dans Git (§9.1, R-003) -------------------------------
 .env
+.env.*
+!.env.example
+*.key
+*.pem
+*.p12
+secrets/
+**/credentials.json
 
-# vercel
-.vercel
+# --- Données personnelles : jamais dans Git (§6.4, R-004) ------------------
+data/
+!data/.gitkeep
+corpus/
+inbox/
+knowledge/
 
-# typescript
-*.tsbuildinfo
-next-env.d.ts
+# --- Modèles : trop volumineux, téléchargés par preload-models.sh ----------
+models/
+!models/.gitkeep
+*.gguf
+*.safetensors
+*.bin
 
-# local dev helpers (not shipped)
-_shoot.js
+# --- Sauvegardes et exports ------------------------------------------------
+backups/
+*.tar.gz
+*.tar.gz.enc
+exports/
+
+# --- Sorties de mission : générées sur la machine de Kevin -----------------
+# hardware-report.json contient le profil matériel réel ; il est produit
+# localement et validé par Kevin avant tout partage (§12 KAI-EXEC-001).
+reports/*.json
+reports/*.md
+!reports/.gitkeep
+!reports/README.md
+tests/evaluation/results/
+*.log
+logs/
+
+# --- Environnements Python / Node ------------------------------------------
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+node_modules/
+.next/
+dist/
+build/
+
+# --- Système ---------------------------------------------------------------
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/

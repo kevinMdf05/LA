@@ -1,0 +1,91 @@
+# ---------------------------------------------------------------------------
+# KAI — chemin ALTERNATIF, conteneurisé.
+#
+# ⚠️  CE N'EST PAS LE CHEMIN RECOMMANDÉ SUR LE MAC M1 8 GO (décision D-007).
+#
+# Docker Desktop fait tourner une machine virtuelle Linux qui réserve
+# plusieurs gigaoctets en permanence, et Ollama en conteneur sur macOS
+# n'accède pas au GPU Apple Silicon : l'inférence retombe sur le CPU.
+# Sur 8 Go de mémoire unifiée, c'est le mauvais compromis.
+#
+# Ce fichier existe parce que le §18 l'exige comme livrable, et parce qu'il
+# est utile sur une machine 16 Go ou plus (profils B/C/D).  Sur le Mac de
+# Kevin, utilisez l'installation native : `make install`.
+#
+# Usage :
+#   cd infra/compose
+#   OLLAMA_IMAGE_TAG=<version relevée> docker compose up -d
+# ---------------------------------------------------------------------------
+
+services:
+
+  ollama:
+    # Aucune valeur par défaut : la variable DOIT être renseignée, sinon
+    # Compose s'arrête avec le message ci-dessous.  Échouer bruyamment vaut
+    # mieux que tirer silencieusement `latest` (R-006).
+    image: ollama/ollama:${OLLAMA_IMAGE_TAG:?Épinglez une version — relevez-la sur https://hub.docker.com/r/ollama/ollama/tags puis ajoutez son digest ici. Ne jamais utiliser latest.}
+    container_name: kai-ollama
+    restart: unless-stopped
+    # Boucle locale uniquement : "127.0.0.1:11434:11434", et non "11434:11434",
+    # qui exposerait le port à tout le réseau local (§9.2).
+    ports:
+      - "127.0.0.1:11434:11434"
+    volumes:
+      - ollama-models:/root/.ollama
+    environment:
+      # Discipline mémoire du §5 : un seul modèle, aucun parallélisme.
+      OLLAMA_NUM_PARALLEL: "1"
+      OLLAMA_MAX_LOADED_MODELS: "1"
+      OLLAMA_KEEP_ALIVE: "5m"
+    healthcheck:
+      test: ["CMD-SHELL", "ollama list >/dev/null 2>&1 || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  open-webui:
+    # Version vérifiée le 2026-09-01 (voir VERSIONS.md).
+    # À compléter par un digest après le premier `docker pull` :
+    #   docker image inspect ghcr.io/open-webui/open-webui:v0.11.3 \
+    #     --format '{{index .RepoDigests 0}}'
+    image: ghcr.io/open-webui/open-webui:${OPEN_WEBUI_IMAGE_TAG:-v0.11.3}
+    container_name: kai-open-webui
+    restart: unless-stopped
+    depends_on:
+      ollama:
+        condition: service_healthy
+    ports:
+      - "127.0.0.1:8080:8080"
+    volumes:
+      - webui-data:/app/backend/data
+    environment:
+      OLLAMA_BASE_URL: "http://ollama:11434"
+      # Mode hors ligne : rien ne doit être téléchargé au démarrage (R-002).
+      HF_HUB_OFFLINE: "1"
+      TRANSFORMERS_OFFLINE: "1"
+      # Le RAG passe par Ollama, donc aucun modèle d'embeddings à télécharger.
+      RAG_EMBEDDING_ENGINE: "ollama"
+      RAG_EMBEDDING_MODEL: "${KAI_MODEL_EMBEDDING:-embeddinggemma:300m-qat-q8_0}"
+      ENABLE_RAG_WEB_SEARCH: "false"
+      # Aucune télémétrie (§9.2).
+      ANONYMIZED_TELEMETRY: "false"
+      DO_NOT_TRACK: "true"
+      SCARF_NO_ANALYTICS: "true"
+      WEBUI_AUTH: "true"
+      # Lue depuis l'environnement, jamais écrite dans ce fichier (§9.1).
+      WEBUI_SECRET_KEY: "${WEBUI_SECRET_KEY:?Définissez WEBUI_SECRET_KEY dans votre environnement — ne l écrivez jamais dans ce fichier.}"
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS http://127.0.0.1:8080/health || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+
+# Volumes nommés : les données survivent à `docker compose down` et à un
+# redémarrage complet de la machine (R-007).
+volumes:
+  ollama-models:
+    name: kai-ollama-models
+  webui-data:
+    name: kai-webui-data
